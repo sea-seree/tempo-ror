@@ -14,7 +14,7 @@
  *= require_self
  */
 
- * {
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -22,9 +22,8 @@
 }
 
 body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    width: 80%;
+    margin: auto;
     height: 100vh;
     background: linear-gradient(135deg, #00fffb, #0e2f76);
 }
