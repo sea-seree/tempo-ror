@@ -1,0 +1,114 @@
+.show-users {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.show-users section {
+    background-color: #fff;
+    padding: 3rem 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 1000px;
+    width: 100%;
+}
+
+header {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 24px;
+    color: #333;
+    text-align: center;
+}
+
+.users-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: start;
+}
+
+.user-card {
+    background-color: #fefefe;
+    border-radius: 8px;
+    padding: 16px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: calc(50% - 8px);
+    transition: transform 0.3s ease;
+}
+
+.user-card:hover {
+    transform: translateY(-5px);
+}
+
+.user-info {
+    margin-bottom: 16px;
+}
+
+.user-actions {
+    display: flex;
+    justify-content: space-between;
+}
+
+.btn:last-child {
+    margin-right: 0;
+}
+
+.btn-view {
+    background-color: #0e2f76;
+    padding: 8px 12px;
+    border-radius: 4px;
+    text-decoration: none;
+    color: white;
+    font-size: 14px;
+    text-align: center;
+    flex: 1;
+    margin-right: 4px;
+    font-weight: bold;
+
+}
+
+.btn-view:hover {
+    background-color: #1343aa;
+}
+
+.btn-edit {
+    background-color: #ffffff;
+    padding: 8px 12px;
+    border-radius: 4px;
+    text-decoration: none;
+    color: black;
+    font-size: 14px;
+    text-align: center;
+    flex: 1;
+    margin-right: 4px;
+    border: #0e2f76 solid 1px;
+    font-weight: bold;
+
+}
+
+.btn-edit:hover {
+    background-color: #e7e7e7;
+}
+
+.btn-delete {
+    background-color: #dc3545;
+    padding: 8px 12px;
+    border-radius: 4px;
+    text-decoration: none;
+    color: white;
+    font-size: 14px;
+    text-align: center;
+    flex: 1;
+    margin-right: 4px;
+    font-weight: bold;
+}
+
+.btn-delete:hover {
+    background-color: #c82333;
+}
+
