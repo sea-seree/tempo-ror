@@ -1,0 +1,44 @@
+<%= link_to "< Home page", users_path %>
+
+
+<%= form_with model: @user, local: true do |form| %>
+  <div>
+    <%= form.label :first_name, "First Name" %>
+    <%= form.text_field :first_name, id: "first-name"  %>
+  </div>
+</div>
+<div>
+  <%= form.label :last_name, "Last Name" %>
+  <%= form.text_field :last_name, id: "last-name" %>
+</div>
+</div>
+<div>
+  <%= form.label :birthday, "Birthday" %>
+  <%= form.date_field :birthday, id: "birthday" %>
+</div>
+</div>
+<div>
+  <%= form.label :gender, "Gender" %>
+  <%= form.radio_button :gender, 'male' %> Male
+  <%= form.radio_button :gender, 'female' %> Female
+</div>
+<div>
+  <%= form.label :email, "Email" %>
+  <%= form.email_field :email, id: "email" %>
+</div>
+</div>
+<div>
+  <%= form.label :phone, "Phone Number" %>
+  <%= form.telephone_field :phone, id: "phone" %>
+</div>
+</div>
+<div>
+  <%= form.label :subject, "Subject" %>
+  <%= form.select :subject, options_for_select([['HTML', 'html'], ['CSS', 'css'], ['JS', 'js'], ['TS', 'ts']]), id: "subject" %>
+</div>
+<div>
+  <%= form.submit "Submit" %>
+</div>
+<% end %>
+
+
