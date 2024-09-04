@@ -8,4 +8,9 @@
 <p> Subject: <%= @user.subject%></p>
 <li>
   <%= link_to "Edit your profile", edit_user_path %>
+
+  <li><%= link_to "Destroy", user_path, data: {
+                    turbo_method: :delete,
+                    turbo_confirm: "Are you sure?"
+                  } %></li>
 </li>
