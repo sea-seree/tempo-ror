@@ -1,5 +1,4 @@
 class User < ApplicationRecord
-  # ตรวจสอบว่าฟิลด์เหล่านี้ต้องมีค่า
   validates :first_name, presence: true, length: { maximum: 50 }
   validates :last_name, presence: true, length: { maximum: 50 }
   validates :birthday, presence: true

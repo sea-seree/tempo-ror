@@ -1,0 +1,111 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+form div {
+    flex: 1 1 45%;
+}
+
+form div label {
+    color: #333;
+    font-weight: bold;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 4px;
+    font-weight: bold;
+}
+
+
+.form-control {
+    width: 100%;
+    padding: 8px;
+    border: 0.5px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+    outline: none;
+}
+
+.radio-gender {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+}
+
+.gender-label {
+    font-weight: bold;
+    align-self: flex-start;
+    margin-bottom: 4px;
+
+}
+
+.radio-options {
+    display: flex;
+    padding: 12px 12px 12px 0px;
+    justify-content: center;
+    gap: 20px;
+}
+
+.button-submit {
+    flex: 1 1 100%;
+    display: flex;
+    justify-content: end;
+}
+
+.btn.btn-primary {
+    background-color: #0e2f76;
+    color: #fff;
+    padding: 12px 32px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.btn.btn-primary:hover {
+    background-color: #1343aa;
+    transition: 0.3s;
+}
+
+@media screen and (max-width: 768px) {
+    section {
+        padding: 3rem 2rem;
+    }
+
+    form div {
+        flex: 1 1 100%;
+    }
+
+    header {
+        font-size: 2rem;
+        text-align: center;
+    }
+
+    button[type="submit"] {
+        width: 100%;
+        padding: 12px 0;
+        font-size: 18px;
+    }
+
+    .radio-options {
+        justify-content: start;
+        padding-left: 0;
+    }
+}
+
+@media screen and (min-width: 1200px) {
+    section {
+        padding: 5rem 6rem;
+        max-width: 700px;
+    }
+
+    header {
+        font-size: 2.5rem;
+    }
+}
