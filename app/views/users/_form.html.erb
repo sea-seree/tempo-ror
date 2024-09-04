@@ -11,7 +11,7 @@
   <div>
     <%= form.label :last_name, "Last Name" %>
     <%= form.text_field :last_name, id: "last-name" %>
-    <% @user.errors.full_messages_for(:first_name).each do |message| %>
+    <% @user.errors.full_messages_for(:last_name).each do |message| %>
       <div>
         <%= message %>
       <% end %>
@@ -20,7 +20,7 @@
   <div>
     <%= form.label :birthday, "Birthday" %>
     <%= form.date_field :birthday, id: "birthday" %>
-    <% @user.errors.full_messages_for(:first_name).each do |message| %>
+    <% @user.errors.full_messages_for(:birthday).each do |message| %>
       <div>
         <%= message %>
       <% end %>
@@ -30,11 +30,16 @@
     <%= form.label :gender, "Gender" %>
     <%= form.radio_button :gender, 'male' %> Male
     <%= form.radio_button :gender, 'female' %> Female
+    <% @user.errors.full_messages_for(:gender).each do |message| %>
+      <div>
+        <%= message %>
+      <% end %>
+    </div>
   </div>
   <div>
     <%= form.label :email, "Email" %>
     <%= form.email_field :email, id: "email" %>
-        <% @user.errors.full_messages_for(:first_name).each do |message| %>
+    <% @user.errors.full_messages_for(:email).each do |message| %>
       <div>
         <%= message %>
       <% end %>
@@ -43,7 +48,7 @@
   <div>
     <%= form.label :phone, "Phone Number" %>
     <%= form.telephone_field :phone, id: "phone" %>
-        <% @user.errors.full_messages_for(:first_name).each do |message| %>
+    <% @user.errors.full_messages_for(:phone).each do |message| %>
       <div>
         <%= message %>
       <% end %>
@@ -52,6 +57,11 @@
   <div>
     <%= form.label :subject, "Subject" %>
     <%= form.select :subject, options_for_select([['HTML', 'html'], ['CSS', 'css'], ['JS', 'js'], ['TS', 'ts']]), id: "subject" %>
+    <% @user.errors.full_messages_for(:subject).each do |message| %>
+      <div>
+        <%= message %>
+      <% end %>
+    </div>
   </div>
   <div>
     <%= form.submit "Submit" %>
