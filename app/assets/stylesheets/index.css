@@ -112,3 +112,48 @@ header {
     background-color: #c82333;
 }
 
+@media screen and (min-width: 1200px) {
+    .user-card {
+        width: calc(33.333% - 16px);
+        justify-content: start;
+    }
+
+}
+
+@media screen and (max-width: 1199px) and (min-width: 768px) {
+    .user-card {
+        width: calc(50% - 16px);
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .user-card {
+        width: 100%;
+    }
+
+    .user-actions {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .btn {
+        margin-right: 0;
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .user-card {
+        padding: 12px;
+
+    }
+
+    header {
+        font-size: 1.8rem;
+    }
+
+    .btn {
+        font-size: 12px;
+        padding: 6px 10px;
+    }
+}
