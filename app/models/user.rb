@@ -5,5 +5,5 @@ class User < ApplicationRecord
   validates :gender, presence: true, inclusion: { in: %w(male female), message: "%{value} is not a valid gender" }
   validates :email, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP }, uniqueness: true
   validates :phone, presence: true, format: { with: /\A[0-9]{10}\z/, message: "must be 10 digits" }
-  validates :subject, presence: true, inclusion: { in: %w(html css js ts), message: "%{value} is not a valid subject" }
+  validates :subject, presence: true
 end
