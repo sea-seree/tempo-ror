@@ -1,16 +1,21 @@
-<%= link_to "< Home page", users_path %>
-<h1>Your profile</h1>
-<p> Name: <%= @user.first_name%>  <%= @user.last_name%> </p>
-<p> Birthday: <%= @user.birthday%></p>
-<p> Gender: <%= @user.gender%></p>
-<p> Email: <%= @user.email%></p>
-<p> Phone: <%= @user.phone%></p>
-<p> Subject: <%= @user.subject%></p>
-<li>
-  <%= link_to "Edit your profile", edit_user_path %>
-
-  <li><%= link_to "Destroy", user_path, data: {
-                    turbo_method: :delete,
-                    turbo_confirm: "Are you sure?"
-                  } %></li>
-</li>
+<div class="profile-container">
+  <section class="profile-card">
+    <%= link_to "javascript:history.back()", class: 'btn-back' do %>
+      <%= image_tag('arrow-left-solid.svg', alt: 'Home', class: 'icon') %>
+      Home page
+    <% end %>
+    <header class="profile-header">Your Profile</header>
+    <div class="profile-details">
+      <p><strong>Name:</strong> <%= @user.first_name %> <%= @user.last_name %></p>
+      <p><strong>Birthday:</strong> <%= @user.birthday %></p>
+      <p><strong>Gender:</strong> <%= @user.gender %></p>
+      <p><strong>Email:</strong> <%= @user.email %></p>
+      <p><strong>Phone:</strong> <%= @user.phone %></p>
+      <p><strong>Subject:</strong> <%= @user.subject %></p>
+    </div>
+    <div class="profile-actions">
+      <%= link_to "Edit your profile", edit_user_path, class: 'btn-edit' %>
+      <%= link_to "Destroy", user_path, data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: 'btn-delete' %>
+    </div>
+  </section>
+</div>
