@@ -1,3 +1,17 @@
+.header {
+    padding: 0 24px;
+    height: 64px;
+}
+
+.plus-icon{
+    width: 16px;
+    height: 16px;
+    vertical-align: middle;
+    margin-right: 4px;
+    align-items: center;
+    color: #fff;
+}
+
 .show-users {
     display: flex;
     justify-content: center;
@@ -20,6 +34,9 @@ header {
     margin-bottom: 24px;
     color: #333;
     text-align: center;
+    display: flex;
+    gap: 20px;
+
 }
 
 .users-list {
@@ -110,6 +127,22 @@ header {
 
 .btn-delete:hover {
     background-color: #c82333;
+}
+
+.btn-register {
+    background-color: #0e2f76;
+    padding: 12px 12px;
+    border-radius: 4px;
+    text-decoration: none;
+    color: white;
+    font-size: 14px;
+    text-align: center;
+    font-weight: bold;
+    align-self: center;
+}
+
+.btn-register:hover {
+    background-color: #1343aa;
 }
 
 @media screen and (min-width: 1200px) {
