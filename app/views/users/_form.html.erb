@@ -1,69 +1,75 @@
-  <%= form_with model: @user, local: true do |form| %>
+<%= form_with model: @user, local: true do |form| %>
   <div>
     <%= form.label :first_name, "First Name", for: "first-name", class: "form-label" %>
     <%= form.text_field :first_name, id: "first-name", class: "form-control" %>
-    <% @user.errors.full_messages_for(:first_name).each do |message| %>
-      <div>
+    <div class="error-message">
+      <% @user.errors.full_messages_for(:first_name).each do |message| %>
         <%= message %>
       <% end %>
     </div>
-    <div>
-      <%= form.label :last_name, "Last Name", for: "last-name", class: "form-label" %>
-      <%= form.text_field :last_name, id: "last-name", class: "form-control" %>
+  </div>
+  <div>
+    <%= form.label :last_name, "Last Name", for: "last-name", class: "form-label" %>
+    <%= form.text_field :last_name, id: "last-name", class: "form-control" %>
+    <div class="error-message">
       <% @user.errors.full_messages_for(:last_name).each do |message| %>
-        <div>
-          <%= message %>
-        <% end %>
-      </div>
-      <div>
-        <%= form.label :birthday, "Birthday", for: "birthday", class: "form-label" %>
-        <%= form.date_field :birthday, id: "birthday", class: "form-control" %>
-        <% @user.errors.full_messages_for(:birthday).each do |message| %>
-          <div>
-            <%= message %>
-          <% end %>
-        </div>
-        <div class="radio-gender">
-          <%= form.label :gender, "Gender", class: "gender-label" %>
-          <div class="radio-options">
-            <label>
-              <%= form.radio_button :gender, 'male' %> Male
-            </label>
-            <label>
-              <%= form.radio_button :gender, 'female' %> Female
-            </label>
-            <% @user.errors.full_messages_for(:gender).each do |message| %>
-              <div>
-                <%= message %>
-              <% end %>
-            </div>
-          </div>
-          <div>
-            <%= form.label :email, "Email", for: "email", class: "form-label" %>
-            <%= form.email_field :email, id: "email", class: "form-control" %>
-            <% @user.errors.full_messages_for(:email).each do |message| %>
-              <div>
-                <%= message %>
-              <% end %>
-            </div>
-            <div>
-              <%= form.label :phone, "Phone Number", for: "phone", class: "form-label" %>
-              <%= form.telephone_field :phone, id: "phone", class: "form-control" %>
-              <% @user.errors.full_messages_for(:phone).each do |message| %>
-                <div>
-                  <%= message %>
-                <% end %>
-              </div>
-              <div>
-                <%= form.label :subject, "Subject", for: "subject", class: "form-label" %>
-                <%= form.select :subject, options_for_select([['Choose option', 'none'], 'HTML', 'CSS', 'JavaScript', 'Ruby on Rails', 'Docker']), {}, class: "form-control" %>
-                <% @user.errors.full_messages_for(:subject).each do |message| %>
-                  <div>
-                    <%= message %>
-                  <% end %>
-                </div>
-                <div class="button-submit">
-                  <%= form.submit "Submit", class: "btn btn-primary" %>
-                </div>
-              <% end %>
-            </section>
+        <%= message %>
+      <% end %>
+    </div>
+  </div>
+  <div>
+    <%= form.label :birthday, "Birthday", for: "birthday", class: "form-label" %>
+    <%= form.date_field :birthday, id: "birthday", class: "form-control" %>
+    <div class="error-message">
+      <% @user.errors.full_messages_for(:birthday).each do |message| %>
+        <%= message %>
+      <% end %>
+    </div>
+  </div>
+  <div class="radio-gender">
+    <%= form.label :gender, "Gender", class: "gender-label" %>
+    <div class="radio-options">
+      <label>
+        <%= form.radio_button :gender, 'male' %> Male
+      </label>
+      <label>
+        <%= form.radio_button :gender, 'female' %> Female
+      </label>
+    </div>
+    <div class="error-message">
+      <% @user.errors.full_messages_for(:gender).each do |message| %>
+        <%= message %>
+      <% end %>
+    </div>
+  </div>
+  <div>
+    <%= form.label :email, "Email", for: "email", class: "form-label" %>
+    <%= form.email_field :email, id: "email", class: "form-control" %>
+    <div class="error-message">
+      <% @user.errors.full_messages_for(:email).each do |message| %>
+        <%= message %>
+      <% end %>
+    </div>
+  </div>
+  <div>
+    <%= form.label :phone, "Phone Number", for: "phone", class: "form-label" %>
+    <%= form.telephone_field :phone, id: "phone", class: "form-control" %>
+    <div class="error-message">
+      <% @user.errors.full_messages_for(:phone).each do |message| %>
+        <%= message %>
+      <% end %>
+    </div>
+  </div>
+  <div>
+    <%= form.label :subject, "Subject", for: "subject", class: "form-label" %>
+    <%= form.select :subject, options_for_select([['Choose option', 'none'], 'HTML', 'CSS', 'JavaScript', 'Ruby on Rails', 'Docker']), {}, class: "form-control" %>
+    <div class="error-message">
+      <% @user.errors.full_messages_for(:subject).each do |message| %>
+        <%= message %>
+      <% end %>
+    </div>
+  </div>
+  <div class="button-submit">
+    <%= form.submit "Submit", class: "btn btn-primary" %>
+  </div>
+<% end %>
