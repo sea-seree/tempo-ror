@@ -27,4 +27,19 @@ body {
     height: 100vh;
     background: linear-gradient(135deg, #00fffb, #0e2f76);
     background-attachment: fixed;
+    overflow-y: auto;
+}
+
+@media screen and (max-width: 768px) {
+    body {
+        width: 90%;
+        margin: auto;
+    }
+}
+@media screen and (max-width: 375px) {
+    body {
+        width: 95%;
+        margin: auto;
+        min-height: 100vh;
+    }
 }

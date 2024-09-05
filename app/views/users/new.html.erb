@@ -2,7 +2,7 @@
 <section>
     <%= link_to root_path, class: 'btn-back' do %>
       <%= image_tag('arrow-left-solid.svg', alt: 'Home', class: 'icon') %>
-      Home page
+      <p>Home page</p>
     <% end %>
   <header>Register Form</header>
   <%= render partial: 'form', locals: { user: @user } %>

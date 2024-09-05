@@ -13,12 +13,99 @@ section {
     max-width: 550px;
     width: 100%;
 }
-
+section .btn-back  {
+    display: flex;
+}
 header {
     font-size: 2.5rem;
     font-weight: bolder;
     text-align: start;
     margin-bottom: 24px;
-    margin-top: 24px;
+    margin-top: 16px;
     color: #333;
+}
+
+@media screen and (min-width: 1200px) {
+    section {
+        max-width: 700px;
+    }
+
+    header {
+        font-size: 2.5rem;
+    }
+}
+
+@media screen and (min-width: 1200px) {
+    section {
+        padding: 5rem 6rem;
+        max-width: 700px;
+    }
+
+    header {
+        font-size: 2.5rem;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    section {
+        padding: 3rem 2rem;
+    }
+
+    form div {
+        flex: 1 1 100%;
+    }
+
+    header {
+        font-size: 2rem;
+        text-align: center;
+    }
+
+    button[type="submit"] {
+        width: 100%;
+        padding: 12px 0;
+        font-size: 18px;
+    }
+
+    .radio-options {
+        justify-content: start;
+        padding-left: 0;
+    }
+}
+
+@media screen and (max-width: 375px) {
+    header {
+        font-size: 1.5rem;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+    }
+
+    section {
+        padding: 1rem 1.5rem;
+    }
+
+    section .btn-back p {
+        display: none;
+    }
+
+
+
+    .form-control {
+        padding: 6px;
+        font-size: 14px;
+    }
+
+    .btn.btn-primary {
+        padding: 10px 24px;
+        font-size: 14px;
+    }
+
+    .radio-options {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .button-submit {
+        justify-content: center;
+    }
 }

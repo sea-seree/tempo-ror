@@ -1,9 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
+
 form {
     display: flex;
     flex-wrap: wrap;
-    gap: 20px;
+    gap: 1rem;
+    
 }
 
 form div {
@@ -17,24 +19,45 @@ form div label {
 
 .form-label {
     display: block;
-    margin-bottom: 4px;
+    margin-bottom: 0.25rem;
     font-weight: bold;
 }
 
 
 .form-control {
     width: 100%;
-    padding: 8px;
+    padding: 0.5rem;
     border: 0.5px solid #ccc;
-    border-radius: 8px;
-    font-size: 16px;
+    border-radius: 0.5rem;
+    font-size: 1rem;
     outline: none;
+    overflow-y: auto;
+
+}
+
+.form-control section {
+    background-color: #fff;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: auto;
+    width: 100%;
+    overflow-y: auto;
+
 }
 
 .radio-gender {
     display: flex;
     flex-direction: column;
     align-items: start;
+}
+
+.field_with_errors {
+    align-items: center;
+    display: flex;
+}
+
+input[type="radio"] {
+    margin-right: 8px;
 }
 
 .gender-label {
@@ -46,15 +69,20 @@ form div label {
 
 .radio-options {
     display: flex;
-    padding: 12px 12px 12px 0px;
+    padding: 8px 0px 8px 0px;
     justify-content: center;
-    gap: 20px;
+    gap: 1rem;
 }
 
 .button-submit {
     flex: 1 1 100%;
     display: flex;
     justify-content: end;
+}
+
+.radio-options label {
+    display: flex;
+    align-items: center;
 }
 
 .btn.btn-primary {
@@ -73,19 +101,27 @@ form div label {
     transition: 0.3s;
 }
 
+
+.error-message {
+    min-height: 20px;
+    font-size: 0.6rem; 
+    display: flex;
+    align-items: center;
+    color: #dc3545;
+    margin-top: 0.5rem;
+}
+
 @media screen and (max-width: 768px) {
-    section {
-        padding: 3rem 2rem;
+
+    form {
+        flex-direction: column;
+        gap: 0.5rem;
     }
 
     form div {
         flex: 1 1 100%;
     }
 
-    header {
-        font-size: 2rem;
-        text-align: center;
-    }
 
     button[type="submit"] {
         width: 100%;
@@ -99,13 +135,47 @@ form div label {
     }
 }
 
-@media screen and (min-width: 1200px) {
-    section {
-        padding: 5rem 6rem;
-        max-width: 700px;
+
+@media screen and (max-width: 375px) {
+
+    .form-container{
+        min-height: auto;
+        margin-top: 10px;
+        justify-content: start;
     }
 
-    header {
-        font-size: 2.5rem;
+    .form-control {
+        padding: 6px;
+        font-size: 14px;
+        display: flex;
+        justify-content: none;
+        flex-direction: column;
+    }
+
+    .btn.btn-primary {
+        padding: 10px 24px;
+        font-size: 14px;
+    }
+
+    .radio-options {
+        flex-direction: column;
+    }
+
+    .button-submit {
+        justify-content: center;
+    }
+
+    .btn-back {
+        margin-top: 8px;
+    }
+
+    .error-message {
+        min-height: 0;
+        font-size: 0.6rem; 
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        color: #dc3545;
+        margin-top: 0;
     }
 }
