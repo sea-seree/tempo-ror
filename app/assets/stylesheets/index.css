@@ -120,9 +120,9 @@ header {
     color: white;
     font-size: 14px;
     text-align: center;
-    flex: 1;
     margin-right: 4px;
     font-weight: bold;
+    align-self: center;
 }
 
 .btn-delete:hover {
