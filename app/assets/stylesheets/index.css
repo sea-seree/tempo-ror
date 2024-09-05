@@ -3,7 +3,7 @@
     height: 64px;
 }
 
-.plus-icon{
+.plus-icon {
     width: 16px;
     height: 16px;
     vertical-align: middle;
@@ -188,4 +188,21 @@ header {
         font-size: 12px;
         padding: 6px 10px;
     }
+}
+
+.fade-out {
+    transform: scale(0.1);
+    transition: transform 0.2s ease;
+}
+
+/* หลังโหลดหน้าใหม่ */
+.fade-in {
+    transform: scale(1.1);
+    transition: transform 0.2s ease;
+}
+
+/* ปรับให้เข้าที่ */
+.fade-in-active {
+    transform: scale(1);
+    opacity: 1;
 }
