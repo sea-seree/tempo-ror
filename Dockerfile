@@ -18,12 +18,13 @@ ENV RAILS_ENV="production" \
 FROM base as build
 
 # Install packages needed to build gems
-RUN apk add --no-cache \
+RUN apk update && apk add --no-cache \
     build-base \
     git \
     libvips \
     pkgconfig \
     sqlite-dev
+
 
 # Install application gems
 COPY Gemfile Gemfile.lock ./
