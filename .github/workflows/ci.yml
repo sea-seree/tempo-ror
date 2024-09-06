@@ -33,14 +33,15 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
-      - name: Deploy to AWS
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.SSH_KEY }}
-          script: |
-            cd sea-temop-test
-            sudo docker-compose down
-            sudo docker-compose pull
-            sudo docker-compose up -d
+      steps:
+        - name: Deploy to AWS
+          uses: appleboy/ssh-action@master
+          with:
+            host: ${{ secrets.HOST }}
+            username: ${{ secrets.USERNAME }}
+            key: ${{ secrets.SSH_KEY }}
+            script: |
+              cd sea-temop-test
+              sudo docker-compose down
+              sudo docker-compose pull
+              sudo docker-compose up -d
