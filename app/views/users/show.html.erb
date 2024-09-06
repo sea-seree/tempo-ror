@@ -5,7 +5,7 @@
       Home Page
     <% end %>
     <header class="profile-header">Your Profile
-      <%= link_to "Delete", user_path, data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: 'btn-delete' %>
+      <%= button_to 'Delete', user_path(@user), method: :delete, data: { turbo_confirm: 'Are you sure?' }, class: 'btn-delete' %>
     </header>
     <div class="profile-details">
       <p><strong>Name:</strong> <%= @user.first_name %> <%= @user.last_name %></p>
@@ -15,6 +15,7 @@
       <p><strong>Phone:</strong> <%= @user.phone %></p>
       <p><strong>Subject:</strong> <%= @user.subject %></p>
     </div>
+    
     <div class="profile-actions">
       <%= link_to "Edit your profile", edit_user_path, class: 'btn-edit' %>
     </div>
