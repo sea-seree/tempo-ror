@@ -5,7 +5,7 @@
       Home Page
     <% end %>
     <header class="profile-header">Your Profile
-      <%= button_to 'Delete', user_path(@user), method: :delete, data: { turbo_confirm: 'Are you sure?' }, class: 'btn-delete' %>
+      <%= button_to 'Delete', user_path(@user), method: :delete, class: 'btn-delete' %>
     </header>
     <div class="profile-details">
       <p><strong>Name:</strong> <%= @user.first_name %> <%= @user.last_name %></p>
