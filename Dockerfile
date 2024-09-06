@@ -3,6 +3,7 @@
 # Use Alpine-based Ruby image for a smaller base image
 ARG RUBY_VERSION=3.3.1
 FROM ruby:$RUBY_VERSION-alpine as base
+# FROM registry.docker.com/library/ruby:$RUBY_VERSION-slim as base
 
 # Rails app lives here
 WORKDIR /rails
