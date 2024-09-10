@@ -4,10 +4,10 @@
 ARG RUBY_VERSION=3.3.1
 FROM ruby:$RUBY_VERSION-slim as base
 
-# Rails app lives here
+# Set working directory
 WORKDIR /rails
 
-# Set production environment
+# Set environment variables
 ENV RAILS_ENV="production" \
     BUNDLE_DEPLOYMENT="1" \
     BUNDLE_PATH="/usr/local/bundle" \
@@ -16,7 +16,7 @@ ENV RAILS_ENV="production" \
 # Build stage
 FROM base as build
 
-# Install build dependencies
+# Install build dependencies in one RUN to reduce layers
 RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y \
     build-essential \
@@ -25,11 +25,10 @@ RUN apt-get update -qq && \
     pkg-config && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-# Install application gems
+# Copy gemfiles and install gems
 COPY Gemfile Gemfile.lock ./
-RUN bundle install && \
-    rm -rf ~/.bundle/ "${BUNDLE_PATH}"/ruby/*/cache "${BUNDLE_PATH}"/ruby/*/bundler/gems/*/.git && \
-    bundle exec bootsnap precompile --gemfile
+RUN bundle install --jobs=4 --retry=3 && \
+    rm -rf ~/.bundle/ "${BUNDLE_PATH}"/ruby/*/cache "${BUNDLE_PATH}"/ruby/*/bundler/gems/*/.git
 
 # Copy application code
 COPY . .
@@ -41,7 +40,7 @@ RUN bundle exec bootsnap precompile app/ lib/ && \
 # Final stage for the app image
 FROM base
 
-# Install runtime dependencies
+# Install runtime dependencies in one RUN to reduce layers
 RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y \
     curl \
@@ -49,18 +48,22 @@ RUN apt-get update -qq && \
     libvips && \
     rm -rf /var/lib/apt/lists/* /var/cache/apt/archives /tmp/* /var/tmp/*
 
-# Copy built artifacts: gems, application
+# Copy built artifacts: gems and application code
 COPY --from=build /usr/local/bundle /usr/local/bundle
 COPY --from=build /rails /rails
 
-# Use a non-root user for security
+# Add a non-root user for security
 RUN useradd -ms /bin/bash rails && \
     chown -R rails:rails /rails
+
+# Use the non-root user
 USER rails
 
-# Entrypoint prepares the database
+# Set entrypoint
 ENTRYPOINT ["/rails/bin/docker-entrypoint"]
 
-# Start the server by default, this can be overwritten at runtime
+# Expose the app port
 EXPOSE 3000
+
+# Start the Rails server by default
 CMD ["./bin/rails", "server"]
