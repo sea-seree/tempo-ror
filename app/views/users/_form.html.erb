@@ -1,4 +1,4 @@
-<%= form_with model: @user, local: true do |form| %>
+<%= form_with model: @user, local: true, html: { novalidate: true } do |form| %>
   <div>
     <%= form.label :first_name, "First Name", for: "first-name", class: "form-label" %>
     <%= form.text_field :first_name, id: "first-name", class: "form-control" %>
@@ -19,7 +19,7 @@
   </div>
   <div>
     <%= form.label :birthday, "Birthday", for: "birthday", class: "form-label" %>
-    <%= form.date_field :birthday, id: "birthday", class: "form-control" %>
+    <%= form.date_field :birthday, id: "birthday", class: "form-control", max: 18.years.ago.to_date %>
     <div class="error-message">
       <% @user.errors.full_messages_for(:birthday).each do |message| %>
         <%= message %>

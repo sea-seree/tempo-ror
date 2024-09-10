@@ -1,4 +1,7 @@
 class User < ApplicationRecord
+
+  before_save :capitalize_name
+
   validates :first_name, presence: true
   validates :first_name, format: { with: /\A[a-zA-Z]+\z/, message: "is not allowed to contain numbers or special characters" }, if: -> { first_name.present? }
 
@@ -21,6 +24,8 @@ class User < ApplicationRecord
   validates :subject, presence: true, exclusion: { in: ['none'], message: "must be selected" }
 
 
+  validate :least_18_years_old
+
   private
 
   def validate_birthday_format
@@ -28,4 +33,16 @@ class User < ApplicationRecord
       errors.add(:birthday, "is invalid")
     end
   end
+
+  def least_18_years_old
+    if birthday.present? && birthday > 18.years.ago.to_date
+      errors.add(:birthday, "You must be at least 18 years old.")
+    end
+  end
+
+  def capitalize_name
+    self.first_name = first_name.capitalize
+    self.last_name = last_name.capitalize
+  end
+
 end
