@@ -11,16 +11,12 @@ WORKDIR /rails
 ENV RAILS_ENV="production" \
     BUNDLE_DEPLOYMENT="1" \
     BUNDLE_PATH="/usr/local/bundle" \
-    BUNDLE_WITHOUT="development test" \
-    # ลดจำนวน log และการสร้าง document ที่ไม่จำเป็นใน bundle
-    BUNDLE_CLEAN="1" \
-    BUNDLE_SILENCE_ROOT_WARNING="1" \
-    BUNDLE_DISABLE_SHARED_GEMS="1"
+    BUNDLE_WITHOUT="development test"
 
 # Build stage
 FROM base as build
 
-# Install build dependencies
+# Install build dependencies in one RUN to reduce layers (no Node.js)
 RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y \
     build-essential \
@@ -31,25 +27,24 @@ RUN apt-get update -qq && \
 
 # Copy gemfiles and install gems
 COPY Gemfile Gemfile.lock ./
-RUN bundle install --jobs=4 --retry=3 --without development test --clean && \
-    rm -rf /usr/local/bundle/cache ~/.bundle/cache /tmp/* /var/tmp/*
+RUN bundle install --jobs=4 --retry=3 && \
+    rm -rf ~/.bundle/ "${BUNDLE_PATH}"/ruby/*/cache "${BUNDLE_PATH}"/ruby/*/bundler/gems/*/.git
 
 # Copy application code
 COPY . .
 
-# Precompile bootsnap code and assets
+# Precompile bootsnap code and assets using Sprockets
 RUN bundle exec bootsnap precompile app/ lib/ && \
-    SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile && \
-    # ลบไฟล์ที่ถูกสร้างขึ้นระหว่างการ build ที่ไม่จำเป็น
-    rm -rf tmp/cache app/assets vendor/assets node_modules /usr/local/bundle/cache
+    SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
 
 # Final stage for the app image
 FROM base
 
-# Install runtime dependencies
+# Install runtime dependencies in one RUN to reduce layers
 RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y \
     curl \
+    libsqlite3-0 \
     libvips && \
     rm -rf /var/lib/apt/lists/* /var/cache/apt/archives /tmp/* /var/tmp/*
 
