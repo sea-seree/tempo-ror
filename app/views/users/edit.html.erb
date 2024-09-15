@@ -1,10 +1,15 @@
 <div class="form-container">
-<section>
+  <section>
+    <div class="language-button-right">
+      <%= render 'language-button' %>
+    </div>
     <%= link_to root_path, class: 'btn-back' do %>
       <%= image_tag('arrow-left-solid.svg', alt: 'Home', class: 'icon') %>
-      Home Page
+      <p><%= I18n.t('home_page') %></p>
     <% end %>
-  <header>Edit Profile</header>
-  <%= render partial: 'form', locals: { user: @user } %>
-</section>
+    <header>
+      <p><%= I18n.t('edit_user') %></p>
+    </header>
+    <%= render partial: 'form', locals: { user: @user } %>
+  </section>
 </div>

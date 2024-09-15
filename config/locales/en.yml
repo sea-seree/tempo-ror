@@ -27,5 +27,89 @@
 #       "yes": yup
 #       enabled: "ON"
 
+# config/locales/en.yml
 en:
-  hello: "Hello world"
+  hello: "Hello"
+  create_user: "Create new user"
+  user_list: "Users list"
+  first_name: "First name:"
+  last_name: "Last name:"
+  birthday: "Birthday:"
+  gender: "Gender:"
+  male: "Male"
+  female: "Female"
+  email: "Email:"
+  phone: "Phone:"
+  subject: "Subject:"
+  options: "Please select a subject"
+
+  # Button
+  view: "View"
+  edit: "Edit"
+  save: "Save"
+  delete: "Delete"
+  back: "Back"
+  reset: "Reset"
+  cancel: "Cancel"
+  confirm: "Confirm"
+
+  # Main Page
+  home_page: "Home"
+  register_page: "Register"
+  edit_user: "Edit user"
+  show_user: "Show user"
+
+  date:
+    formats:
+      default: "%m/%d/%Y"
+      long: "%B %d, %Y"
+  errors:
+    messages:
+      blank: "can't be blank"
+      invalid: "is invalid"
+      too_short: "is too short (minimum is %{count} characters)"
+      too_long: "is too long (maximum is %{count} characters)"
+      taken: "has already been taken"
+      not_a_number: "is not a number"
+      not_a_date: "is not a valid date"
+      greater_than: "must be greater than %{count}"
+      less_than: "must be less than %{count}"
+      not_included_in_list: "is not included in the list"
+      inclusion: "is not included in the list"
+      exclusion: "is reserved"
+    attributes:
+      user:
+        first_name: "First name"
+        last_name: "Last name"
+        birthday: "Birthday"
+        gender: "Gender"
+        email: "Email"
+        phone: "Phone"
+        subject: "Subject"
+    models:
+      user:
+        attributes:
+          first_name:
+            blank: "%{attribute} #{I18n.t('errors.messages.blank')}"
+            format: "is not allowed to contain numbers or special characters"
+          last_name:
+            blank: "%{attribute} #{I18n.t('errors.messages.blank')}"
+            format: "is not allowed to contain numbers or special characters"
+            too_long: "%{attribute} #{I18n.t('errors.messages.too_long', count: 50)}"
+          birthday:
+            blank: "%{attribute} #{I18n.t('errors.messages.blank')}"
+            invalid: "%{attribute} #{I18n.t('errors.messages.invalid')}"
+          gender:
+            blank: "%{attribute} #{I18n.t('errors.messages.blank')}"
+            inclusion: "%{attribute} %{value} #{I18n.t('errors.messages.inclusion')}"
+          email:
+            blank: "%{attribute} #{I18n.t('errors.messages.blank')}"
+            invalid: "%{attribute} #{I18n.t('errors.messages.invalid')}"
+            taken: "%{attribute} #{I18n.t('errors.messages.taken')}"
+          phone:
+            blank: "%{attribute} #{I18n.t('errors.messages.blank')}"
+            format: "%{attribute} #{I18n.t('errors.messages.not_a_number')}"
+          subject:
+            blank: "%{attribute} #{I18n.t('errors.messages.blank')}"
+            exclusion: "%{attribute} #{I18n.t('errors.messages.exclusion')}"
+

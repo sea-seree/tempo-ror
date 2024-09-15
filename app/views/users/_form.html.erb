@@ -1,6 +1,6 @@
-<%= form_with model: @user, local: true, html: { novalidate: true } do |form| %>
+<%= form_with model: @user, html: { nonvalidate: true } do |form| %>
   <div>
-    <%= form.label :first_name, "First Name", for: "first-name", class: "form-label" %>
+    <%= form.label :first_name, I18n.t('first_name'), for: "first-name", class: "form-label" %>
     <%= form.text_field :first_name, id: "first-name", class: "form-control" %>
     <div class="error-message">
       <% @user.errors.full_messages_for(:first_name).each do |message| %>
@@ -9,7 +9,7 @@
     </div>
   </div>
   <div>
-    <%= form.label :last_name, "Last Name", for: "last-name", class: "form-label" %>
+    <%= form.label :last_name, I18n.t('last_name'), for: "last-name", class: "form-label" %>
     <%= form.text_field :last_name, id: "last-name", class: "form-control" %>
     <div class="error-message">
       <% @user.errors.full_messages_for(:last_name).each do |message| %>
@@ -18,22 +18,27 @@
     </div>
   </div>
   <div>
-    <%= form.label :birthday, "Birthday", for: "birthday", class: "form-label" %>
-    <%= form.date_field :birthday, id: "birthday", class: "form-control", max: 18.years.ago.to_date %>
+    <%= form.label :birthday, I18n.t('birthday'), for: "birthday", class: "form-label" %>
+    <%= form.date_field :birthday,
+      required: false,
+      class: 'form-control',
+      data: { 
+        controller: "date-picker",
+        date_picker_target: "dateField",
+        value: @user.birthday.nil? ? "" : format_date_in_thai(@user.birthday, :default) 
+      } %>
     <div class="error-message">
-      <% @user.errors.full_messages_for(:birthday).each do |message| %>
-        <%= message %>
-      <% end %>
+      <%= @user.errors.full_messages_for(:birthday).join(", ") %>
     </div>
   </div>
   <div class="radio-gender">
-    <%= form.label :gender, "Gender", class: "gender-label" %>
+    <%= form.label :gender, I18n.t('gender'), class: "gender-label" %>
     <div class="radio-options">
       <label>
-        <%= form.radio_button :gender, 'male' %> Male
+        <%= form.radio_button :gender, 'male' %> <%= I18n.t('male') %>
       </label>
       <label>
-        <%= form.radio_button :gender, 'female' %> Female
+        <%= form.radio_button :gender, 'female' %> <%= I18n.t('female') %>
       </label>
     </div>
     <div class="error-message">
@@ -43,7 +48,7 @@
     </div>
   </div>
   <div>
-    <%= form.label :email, "Email", for: "email", class: "form-label" %>
+    <%= form.label :email, I18n.t('email'), for: "email", class: "form-label" %>
     <%= form.email_field :email, id: "email", class: "form-control" %>
     <div class="error-message">
       <% @user.errors.full_messages_for(:email).each do |message| %>
@@ -52,7 +57,7 @@
     </div>
   </div>
   <div>
-    <%= form.label :phone, "Phone Number", for: "phone", class: "form-label" %>
+    <%= form.label :phone, I18n.t('phone'), for: "phone", class: "form-label" %>
     <%= form.telephone_field :phone, id: "phone", class: "form-control", maxlength: 10 %>
     <div class="error-message">
       <% @user.errors.full_messages_for(:phone).each do |message| %>
@@ -61,8 +66,8 @@
     </div>
   </div>
   <div>
-    <%= form.label :subject, "Subject", for: "subject", class: "form-label" %>
-    <%= form.select :subject, options_for_select([['Choose option', 'none'], 'HTML', 'CSS', 'JavaScript', 'Ruby on Rails', 'Docker']), {}, class: "form-control" %>
+    <%= form.label :subject, I18n.t('subject'), for: "subject", class: "form-label" %>
+    <%= form.select :subject, options_for_select([[I18n.t('options'), 'none'], 'HTML', 'CSS', 'JavaScript', 'Ruby on Rails', 'Docker']), {}, class: "form-control" %>
     <div class="error-message">
       <% @user.errors.full_messages_for(:subject).each do |message| %>
         <%= message %>
@@ -70,6 +75,6 @@
     </div>
   </div>
   <div class="button-submit">
-    <%= form.submit "Submit", class: "btn btn-primary" %>
+    <%= form.submit I18n.t('confirm'), class: "btn btn-primary" %>
   </div>
 <% end %>

@@ -1,0 +1,13 @@
+  <div class="language-switch">
+  <% if I18n.locale == :th %>
+    <%= link_to url_for(locale: :en), class: 'btn-switch-language' do %>
+      <%= image_tag('language-solid.svg', alt: 'English', class: 'flag-icon') %> <!-- รูปธงภาษาอังกฤษ -->
+      English
+    <% end %>
+  <% else %>
+    <%= link_to url_for(locale: :th), class: 'btn-switch-language' do %>
+      <%= image_tag('language-solid.svg', alt: 'Thai', class: 'flag-icon') %> <!-- รูปธงประเทศไทย -->
+      Thai
+    <% end %>
+  <% end %>
+</div>

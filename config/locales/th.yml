@@ -1,0 +1,86 @@
+th:
+  hello: "สวัสดี"
+  language: "ภาษาไทย"
+  create_user: "สร้างผู้ใช้ใหม่"
+  user_list: "ผู้ใช้ทั้งหมด"
+  first_name: "ชื่อจริง:"
+  last_name: "นามสกุล:"
+  birthday: "วันเกิด:"
+  gender: "เพศ:"
+  male: "ชาย"
+  female: "หญิง"
+  email: "อีเมล:"
+  phone: "เบอร์โทรศัพท์:"
+  subject: "หัวข้อวิชา:"
+  options: "โปรดเลือกวิชา"
+  
+  # Button
+  view: "รับชม"
+  edit: "ปรับแต่ง"
+  save: "บันทึก"
+  delete: "ลบ"
+  back: "กลับ"
+  reset: "รีเซ็ต"
+  cancel: "ยกเลิก"
+  confirm: "ยืนยัน"
+
+  # Main Page
+  home_page: "หน้าหลัก"
+  register_page: "สร้างบัญชีผู้ใช้"
+  edit_user: "ปรับแต่งผู้ใช้"
+  show_user: "รายละเอียดผู้ใช้"
+
+  date:
+    formats:
+      default: "%d/%m/%Y"
+      long: "%d %B %Y"
+  errors:
+    messages:
+      blank: "ไม่สามารถเว้นว่างได้"
+      invalid: "ไม่ถูกต้อง"
+      too_short: "สั้นเกินไป (ขั้นต่ำ %{count} ตัวอักษร)"
+      too_long: "ยาวเกินไป (สูงสุด %{count} ตัวอักษร)"
+      taken: "มีผู้ใช้ไปแล้ว"
+      not_a_number: "ต้องเป็นตัวเลข"
+      not_a_date: "ไม่ใช่วันที่"
+      greater_than: "ต้องมากกว่า %{count}"
+      less_than: "ต้องน้อยกว่า %{count}"
+      not_included_in_list: "ไม่อยู่ในรายการที่กำหนด"
+      inclusion: "ไม่อยู่ในรายการที่กำหนด" 
+      exclusion: "ไม่สามารถเลือกได้"
+    attributes:
+      user:
+        first_name: "ชื่อ"
+        last_name: "นามสกุล"
+        birthday: "วันเกิด"
+        gender: "เพศ"
+        email: "อีเมล"
+        phone: "เบอร์โทร"
+        subject: "หัวข้อ"
+    errors:
+      models:
+        user:
+          attributes:
+            first_name:
+              blank: "%{attribute} #{I18n.t('errors.messages.blank')}"
+              format: "ไม่อนุญาตให้มีตัวเลขหรืออักขระพิเศษ"
+            last_name:
+              blank: "%{attribute} #{I18n.t('errors.messages.blank')}"
+              format: "ไม่อนุญาตให้มีตัวเลขหรืออักขระพิเศษ"
+              too_long: "%{attribute} #{I18n.t('errors.messages.too_long', count: 50)}"
+            birthday:
+              blank: "%{attribute} #{I18n.t('errors.messages.blank')}"
+              invalid: "%{attribute} #{I18n.t('errors.messages.invalid')}"
+            gender:
+              blank: "%{attribute} #{I18n.t('errors.messages.blank')}"
+              inclusion: "%{attribute} %{value} #{I18n.t('errors.messages.inclusion')}"
+            email:
+              blank: "%{attribute} #{I18n.t('errors.messages.blank')}"
+              invalid: "%{attribute} #{I18n.t('errors.messages.invalid')}"
+              taken: "%{attribute} #{I18n.t('errors.messages.taken')}"
+            phone:
+              blank: "%{attribute} #{I18n.t('errors.messages.blank')}"
+              format: "%{attribute} #{I18n.t('errors.messages.not_a_number')}"
+            subject:
+              blank: "%{attribute} #{I18n.t('errors.messages.blank')}"
+              exclusion: "%{attribute} #{I18n.t('errors.messages.exclusion')}"

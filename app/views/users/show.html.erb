@@ -1,23 +1,25 @@
 <div class="profile-container">
   <section class="profile-card">
+    <div class="language-button-right">
+      <%= render 'language-button' %>
+    </div>
     <%= link_to root_path, class: 'btn-back' do %>
       <%= image_tag('arrow-left-solid.svg', alt: 'Home', class: 'icon') %>
-      Home Page
+      <%= I18n.t('home_page') %>
     <% end %>
-    <header class="profile-header">Your Profile
-      <%= button_to 'Delete', user_path(@user), method: :delete, class: 'btn-delete' %>
+    <header class="profile-header"> <%= I18n.t('show_user') %>
+      <%= button_to I18n.t('delete'), user_path(@user), method: :delete, class: 'btn-delete' %>
     </header>
     <div class="profile-details">
-      <p><strong>Name:</strong> <%= @user.first_name %> <%= @user.last_name %></p>
-      <p><strong>Birthday:</strong> <%= @user.birthday %></p>
-      <p><strong>Gender:</strong> <%= @user.gender %></p>
-      <p><strong>Email:</strong> <%= @user.email %></p>
-      <p><strong>Phone:</strong> <%= @user.phone %></p>
-      <p><strong>Subject:</strong> <%= @user.subject %></p>
+      <p><strong><%= I18n.t('first_name') %></strong> <%= @user.first_name %> <%= @user.last_name %></p>
+      <p><strong><%= I18n.t('birthday') %></strong> <%= @user.birthday %></p>
+      <p><strong><%= I18n.t('gender') %></strong> <%= @user.gender %></p>
+      <p><strong><%= I18n.t('email') %></strong> <%= @user.email %></p>
+      <p><strong><%= I18n.t('phone') %></strong> <%= @user.phone %></p>
+      <p><strong><%= I18n.t('subject') %></strong> <%= @user.subject %></p>
     </div>
-    
     <div class="profile-actions">
-      <%= link_to "Edit your profile", edit_user_path, class: 'btn-edit' %>
+      <%= link_to  I18n.t('edit_user'), edit_user_path, class: 'btn-edit' %>
     </div>
   </section>
 </div>

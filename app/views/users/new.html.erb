@@ -1,10 +1,13 @@
 <div class="form-container">
-<section>
+  <section>
+  <div class="language-button-right">
+    <%= render 'language-button' %>
+  </div>
     <%= link_to root_path, class: 'btn-back' do %>
       <%= image_tag('arrow-left-solid.svg', alt: 'Home', class: 'icon') %>
-      <p>Home page</p>
+      <p><%= I18n.t('home_page') %></p>
     <% end %>
-  <header>Register Form</header>
-  <%= render partial: 'form', locals: { user: @user } %>
-</section>
+    <header><%= I18n.t('register_page') %></header>
+    <%= render partial: 'form', locals: { user: @user } %>
+  </section>
 </div>

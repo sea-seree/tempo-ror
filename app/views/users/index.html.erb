@@ -1,22 +1,25 @@
 <div class="show-users">
   <section>
-    <header>Users List
+  <div class="language-button-right">
+    <%= render 'language-button' %>
+  </div>
+    <header><%= I18n.t('user_list') %>
       <%= link_to new_user_path, class: 'btn-register' do %>
         <%= image_tag('plus-solid.svg', alt: 'plus', class: 'plus-icon') %>
-        Create new account
+        <%= I18n.t('create_user') %>
       <% end %>
     </header>
     <div class="users-list">
       <% @users.each do |user| %>
         <div class="user-card">
           <div class="user-info">
-            <strong>First Name:</strong> <%= user.first_name %><br>
-            <strong>Last Name:</strong> <%= user.last_name %><br>
-            <strong>Email:</strong> <%= user.email %>
+            <strong> <%= I18n.t('first_name')%> </strong> <%= user.first_name %><br>
+            <strong> <%= I18n.t('last_name')%> </strong> <%= user.last_name %><br>
+            <strong><%= I18n.t('email')%> </strong> <%= user.email %>
           </div>
           <div class="user-actions">
-            <%= link_to 'View', user, class: 'btn-view' %>
-            <%= link_to 'Edit', edit_user_path(user), class: 'btn-edit' %>
+            <%= link_to I18n.t('view'), user, class: 'btn-view' %>
+            <%= link_to I18n.t('edit'), edit_user_path(user), class: 'btn-edit' %>
           </div>
         </div>
       <% end %>
