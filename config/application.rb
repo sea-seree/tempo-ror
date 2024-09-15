@@ -11,6 +11,13 @@ module Registration
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.1
 
+    # ตั้งค่า locale เริ่มต้นเป็นภาษาไทย
+    config.i18n.default_locale = :th
+    config.i18n.available_locales = [:en, :th]
+
+    # โหลดทุกไฟล์ locale
+    config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}')]
+
     # Please, add to the `ignore` list any other `lib` subdirectories that do
     # not contain `.rb` files, or that should not be reloaded or eager loaded.
     # Common ones are `templates`, `generators`, or `middleware`, for example.
