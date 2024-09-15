@@ -7,6 +7,11 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
   end
 
+  def getall
+    @users = User.all
+    render json: @users
+  end
+
   def new
     @user = User.new
   end
