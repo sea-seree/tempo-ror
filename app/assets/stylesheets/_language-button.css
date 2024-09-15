@@ -1,0 +1,40 @@
+.language-button-right {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+}
+
+.language-switch {
+    text-align: right;
+}
+
+.btn-switch-language {
+    padding: 14px 24px;
+    background: linear-gradient(135deg, #0e2f76, #00fffb);
+    border: none;
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    width: 7rem;
+    justify-content: center;
+    background-size: 200% 200%;
+    animation: gradient-animation 5s ease infinite;
+}
+
+@keyframes gradient-animation {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}

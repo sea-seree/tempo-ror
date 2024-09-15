@@ -17,6 +17,7 @@
     justify-content: center;
     align-items: center;
     min-height: 100vh;
+    flex-direction: column;
 }
 
 .show-users section {
@@ -190,19 +191,3 @@ header {
     }
 }
 
-.fade-out {
-    transform: scale(0.1);
-    transition: transform 0.2s ease;
-}
-
-/* หลังโหลดหน้าใหม่ */
-.fade-in {
-    transform: scale(1.1);
-    transition: transform 0.2s ease;
-}
-
-/* ปรับให้เข้าที่ */
-.fade-in-active {
-    transform: scale(1);
-    opacity: 1;
-}
