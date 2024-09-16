@@ -12,6 +12,13 @@ RSpec.describe UsersController, type: :controller do
       subject: "HTML"
     }
   }
+  let(:invalid_attributes) {
+    {
+      first_name: "",
+      last_name: "",
+      email: "invalid_email"
+    }
+  }
 
   let(:user) { User.create!(valid_attributes) }
 
@@ -51,8 +58,14 @@ RSpec.describe UsersController, type: :controller do
     context "with invalid parameters" do
       it "does not create a new User" do
         expect {
-          post :create, params: { user: { first_name: nil } }
+          post :create, params: { user: { first_name: invalid_attributes } }
         }.to change(User, :count).by(0)
+      end
+
+      it "renders the new template" do
+        post :create, params: { user: invalid_attributes }
+        expect(response).to render_template("new")
+        expect(response.status).to eq(422)
       end
     end
   end
