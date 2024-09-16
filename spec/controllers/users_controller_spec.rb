@@ -70,6 +70,13 @@ RSpec.describe UsersController, type: :controller do
     end
   end
 
+  describe "GET #edit" do
+    it "returns a successful response" do
+      get :edit, params: { id: user.id }
+      expect(response).to be_successful
+      expect(assigns(:user)).to eq(user)
+    end
+  end
 
 
 
