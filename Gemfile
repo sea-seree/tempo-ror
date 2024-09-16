@@ -65,4 +65,5 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
   gem 'rspec-rails', '~> 6.0'
+  gem 'rails-controller-testing'
 end
