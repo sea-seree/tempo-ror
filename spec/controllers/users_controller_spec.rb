@@ -78,6 +78,32 @@ RSpec.describe UsersController, type: :controller do
     end
   end
 
+  describe "PATCH/PUT #update" do
+  context "with valid parameters" do
+    let(:new_attributes) {
+      { first_name: "Jane", last_name: "Doe", email: "jane@example.com" }
+    }
 
+    it "updates the requested user" do
+      put :update, params: { id: user.id, user: new_attributes }
+      user.reload
+      expect(user.first_name).to eq("Jane")
+      expect(user.email).to eq("jane@example.com")
+    end
+
+    it "redirects to the user" do
+      put :update, params: { id: user.id, user: new_attributes }
+      expect(response).to redirect_to(user)
+    end
+  end
+
+  context "with invalid parameters" do
+    it "renders the edit template" do
+      put :update, params: { id: user.id, user: invalid_attributes }
+      expect(response).to render_template("edit")
+      expect(response.status).to eq(422)
+    end
+  end
+end
 
 end
