@@ -39,9 +39,10 @@ RUN bundle install --jobs=4 --retry=3 && \
 # Copy application code
 COPY . .
 
-# Install JavaScript dependencies
-COPY package.json yarn.lock ./
-RUN yarn install --frozen-lockfile
+# Install JavaScript dependencies if package.json exists
+RUN if [ -f package.json ]; then \
+      yarn install --frozen-lockfile; \
+    fi
 
 # Precompile bootsnap code and assets
 RUN bundle exec bootsnap precompile app/ lib/ && \
