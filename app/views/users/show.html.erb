@@ -8,7 +8,7 @@
       <%= I18n.t('home_page') %>
     <% end %>
     <header class="profile-header"> <%= I18n.t('show_user') %>
-      <%= button_to I18n.t('delete'), user_path(@user), method: :delete, class: 'btn-delete' %>
+      <%= button_to I18n.t('delete'), confirm_delete_user_path , method: :get, data: { turbo_frame: 'modal' }, class: 'btn-delete' %>
     </header>
     <div class="profile-details">
       <p><strong><%= I18n.t('first_name') %></strong> <%= @user.first_name %> <%= @user.last_name %></p>
@@ -22,4 +22,6 @@
       <%= link_to  I18n.t('edit_user'), edit_user_path, class: 'btn-edit' %>
     </div>
   </section>
+  <%= turbo_frame_tag "modal" do %>
+  <% end %>
 </div>

@@ -30,6 +30,10 @@ th:
   edit_user: "ปรับแต่งผู้ใช้"
   show_user: "รายละเอียดผู้ใช้"
 
+  # Show
+  confirm_delete_header: "ยืนยันการลบผู้ใช้"
+  confirm_delete_text: "เจ้าแนใจบ่ ว่าต้องการลบบัก"
+
   date:
     formats:
       default: "%d/%m/%Y"

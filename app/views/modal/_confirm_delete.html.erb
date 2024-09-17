@@ -1,0 +1,12 @@
+<%= turbo_frame_tag "modal" do %>
+  <div class="modal-style">
+    <div class="box-style">
+      <h1><%= I18n.t('confirm_delete_header') %></h1>
+      <p> <%= I18n.t('confirm_delete_text') %> <%= @user.first_name %>?</p>
+      <div class="button-confirm">
+        <%= button_to I18n.t('delete'), user_path(@user), method: :delete, data: { turbo_frame: '_top' }, class: 'button-style delete' %>
+        <%= link_to I18n.t('cancel'), '#', class: 'button-style cancel', data: { action: 'modal#close' } %>
+      </div>
+    </div>
+  </div>
+<% end %>

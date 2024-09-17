@@ -39,11 +39,19 @@ class UsersController < ApplicationController
     end
    end
 
-   def destroy
+   def confirm_delete
+    @user = User.find(params[:id])
+    render partial: 'modal/confirm_delete', locals: { user: @user }
+  end
+
+  def destroy
     @user = User.find(params[:id])
     @user.destroy
 
-    redirect_to users_path, status: :see_other
+    respond_to do |format|
+      format.html { redirect_to users_path, notice: 'User was successfully deleted.' }
+      format.turbo_stream { render turbo_stream: turbo_stream.remove("user_#{@user.id}") }
+    end
   end
 
   private

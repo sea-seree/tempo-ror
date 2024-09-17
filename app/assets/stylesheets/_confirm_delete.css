@@ -1,0 +1,122 @@
+:root {
+    --danger-color: #dc3545;
+    --cancel-color: #6c757d;
+    --text-color: #333;
+    --background-color: #ffffff;
+    --shadow-color: rgba(0, 0, 0, 0.3);
+    --overlay-color: rgba(0, 0, 0, 0.7);
+    --border-radius: 8px;
+    --spacing-sm: 10px;
+    --spacing-md: 15px;
+    --spacing-lg: 20px;
+    --font-size-base: 16px;
+    --font-size-title: 24px;
+  }
+  .button-confirm{
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  /* Modal Styles */
+  .modal-style {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--overlay-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .box-style {
+    background-color: var(--background-color);
+    border-radius: var(--border-radius);
+    padding: var(--spacing-lg);
+    box-shadow: 0 4px 20px var(--shadow-color);
+    max-width: 90%;
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .box-style h1 {
+    margin-bottom: var(--spacing-md);
+    font-size: var(--font-size-title);
+    color: var(--text-color);
+  }
+  
+  .box-style p {
+    margin-bottom: var(--spacing-lg);
+    font-size: var(--font-size-base);
+    color: var(--text-color);
+    line-height: 1.5;
+  }
+  
+  /* Button Container */
+  .button-container {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--spacing-sm);
+  }
+  
+  /* Button Styles */
+  .button-style {
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: calc(var(--border-radius) / 2);
+    border: none;
+    cursor: pointer;
+    font-size: var(--font-size-base);
+    transition: background-color 0.3s ease;
+    text-decoration: none;
+    text-align: center;
+    flex: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .button-style.delete {
+    background-color: var(--danger-color);
+    color: white;
+  }
+  
+  .button-style.delete:hover {
+    background-color: #c82333;
+  }
+  
+  .button-style.cancel {
+    background-color: var(--cancel-color);
+    color: white;
+  }
+  
+  .button-style.cancel:hover {
+    background-color: #5a6268;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 480px) {
+    .box-style {
+      width: 95%;
+      padding: var(--spacing-md);
+    }
+  
+    .box-style h1 {
+      font-size: calc(var(--font-size-title) * 0.9);
+    }
+  
+    .box-style p {
+      font-size: calc(var(--font-size-base) * 0.9);
+    }
+  
+    .button-style {
+      padding: calc(var(--spacing-sm) * 0.8) var(--spacing-md);
+      font-size: calc(var(--font-size-base) * 0.9);
+    }
+  
+    .button-container {
+      flex-direction: column;
+    }
+  }
