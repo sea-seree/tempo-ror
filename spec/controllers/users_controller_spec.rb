@@ -119,4 +119,26 @@ RSpec.describe UsersController, type: :controller do
       expect(response).to redirect_to(users_path)
     end
   end
+
+  describe 'GET #confirm_delete' do
+  it 'renders the confirm_delete partial' do
+    get :confirm_delete, params: { id: user.id }
+    expect(response).to render_template(partial: 'modal/_confirm_delete')
+    expect(assigns(:user)).to eq(user)
+  end
+end
+
+  describe 'DELETE #destroy' do
+    it "deletes the user" do
+      user = User.create!(valid_attributes)
+      expect {
+        delete :destroy, params: { id: user.id }
+      }.to change(User, :count).by(-1)
+    end
+
+    it "redirects to the users list" do
+      delete :destroy, params: { id: user.id }
+      expect(response).to redirect_to(users_path)
+    end
+  end
 end
