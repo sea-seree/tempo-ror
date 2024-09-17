@@ -66,4 +66,5 @@ group :test do
   gem "selenium-webdriver"
   gem 'rspec-rails', '~> 6.0'
   gem 'rails-controller-testing'
+  gem 'simplecov', require: false
 end

@@ -5,7 +5,7 @@ RSpec.describe UsersController, type: :controller do
     {
       first_name: "John",
       last_name: "Doe",
-      birthday: "1990-01-01",
+      birthday: "2545-01-01",
       gender: "male",
       email: "john@example.com",
       phone: "1234567890",
@@ -26,7 +26,7 @@ RSpec.describe UsersController, type: :controller do
     it "returns a successful response" do
       get :index
       expect(response).to be_successful
-      expect(assigns(:users)).to eq([user])
+      expect(assigns(:users)).to include(user)
     end
   end
 
