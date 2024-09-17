@@ -1,72 +1,82 @@
 # syntax = docker/dockerfile:1
 
-# Make sure RUBY_VERSION matches the Ruby version in .ruby-version and Gemfile
+# Base image
 ARG RUBY_VERSION=3.3.1
-FROM ruby:$RUBY_VERSION-alpine as base
+FROM ruby:$RUBY_VERSION-slim as base
 
-# Rails app lives here
+# Set working directory
 WORKDIR /rails
 
-# Set production environment
+# Set environment variables
 ENV RAILS_ENV="production" \
     BUNDLE_DEPLOYMENT="1" \
     BUNDLE_PATH="/usr/local/bundle" \
     BUNDLE_WITHOUT="development" \
-    TZ="America/New_York" 
+    NODE_VERSION=20.x \
+    YARN_VERSION=1.22.19
 
-# Throw-away build stage to reduce size of final image
+# Build stage
 FROM base as build
 
-# Install packages needed to build gems for Alpine
-RUN apk add --no-cache \
-    build-base \
+# Install build dependencies, Node.js, and Yarn in one RUN to reduce layers
+RUN apt-get update -qq && \
+    apt-get install --no-install-recommends -y \
+    build-essential \
     git \
-    vips-dev \
-    sqlite-dev \
-    bash \
-    curl \
-    pkgconfig \
-    tzdata 
+    libvips-dev \
+    pkg-config \
+    curl && \
+    curl -fsSL https://deb.nodesource.com/setup_${NODE_VERSION} | bash - && \
+    apt-get install -y nodejs && \
+    npm install -g yarn@${YARN_VERSION} && \
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-# Install application gems
+# Copy gemfiles and install gems
 COPY Gemfile Gemfile.lock ./
 RUN bundle install --jobs=4 --retry=3 && \
-    rm -rf ~/.bundle/ "${BUNDLE_PATH}"/ruby/*/cache "${BUNDLE_PATH}"/ruby/*/bundler/gems/*/.git && \
-    bundle exec bootsnap precompile --gemfile
+    rm -rf ~/.bundle/ "${BUNDLE_PATH}"/ruby/*/cache "${BUNDLE_PATH}"/ruby/*/bundler/gems/*/.git
 
 # Copy application code
 COPY . .
 
-# Precompile bootsnap code for faster boot times
-RUN bundle exec bootsnap precompile app/ lib/
+# Install JavaScript dependencies
+COPY package.json yarn.lock ./
+RUN yarn install --frozen-lockfile
 
-# Precompiling assets for production without requiring secret RAILS_MASTER_KEY
-RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
+# Precompile bootsnap code and assets
+RUN bundle exec bootsnap precompile app/ lib/ && \
+    SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
 
-# Final stage for app image
+# Final stage for the app image
 FROM base
 
-# Install packages needed for deployment
-RUN apk add --no-cache \
-    vips \
-    sqlite-libs \
-    tzdata 
+# Install runtime dependencies, Node.js, and Yarn in one RUN to reduce layers
+RUN apt-get update -qq && \
+    apt-get install --no-install-recommends -y \
+    curl \
+    libsqlite3-0 \
+    libvips && \
+    curl -fsSL https://deb.nodesource.com/setup_${NODE_VERSION} | bash - && \
+    apt-get install -y nodejs && \
+    npm install -g yarn@${YARN_VERSION} && \
+    rm -rf /var/lib/apt/lists/* /var/cache/apt/archives /tmp/* /var/tmp/*
 
-# Copy built artifacts: gems, application
+# Copy built artifacts: gems, node modules, and application code
 COPY --from=build /usr/local/bundle /usr/local/bundle
 COPY --from=build /rails /rails
 
-# Make sure entrypoint is executable
-# RUN chmod +x /rails/bin/docker-entrypoint
+# Add a non-root user for security
+RUN useradd -ms /bin/bash rails && \
+    chown -R rails:rails /rails
 
-# Run and own only the runtime files as a non-root user for security
-RUN adduser -D -g '' rails && \
-    chown -R rails:rails db log storage tmp
-USER rails:rails
+# Use the non-root user
+USER rails
 
-# Entrypoint prepares the database.
-# ENTRYPOINT ["/rails/bin/docker-entrypoint"]
+# Set entrypoint
+ENTRYPOINT ["/rails/bin/docker-entrypoint"]
 
-# Start the server by default, this can be overwritten at runtime
+# Expose the app port
 EXPOSE 3000
-CMD ["./bin/rails", "db:prepare", "&&", "./bin/rails", "server", "-b", "0.0.0.0"]
+
+# Start the Rails server by default
+CMD ["./bin/rails", "server"]
