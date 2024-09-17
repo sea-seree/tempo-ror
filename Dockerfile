@@ -12,13 +12,12 @@ ENV RAILS_ENV="production" \
     BUNDLE_DEPLOYMENT="1" \
     BUNDLE_PATH="/usr/local/bundle" \
     BUNDLE_WITHOUT="development" \
-    NODE_VERSION=20.x \
-    YARN_VERSION=1.22.19
+    NODE_VERSION=20.x
 
 # Build stage
 FROM base as build
 
-# Install build dependencies, Node.js, and Yarn in one RUN to reduce layers
+# Install build dependencies and Node.js in one RUN to reduce layers
 RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y \
     build-essential \
@@ -28,7 +27,6 @@ RUN apt-get update -qq && \
     curl && \
     curl -fsSL https://deb.nodesource.com/setup_${NODE_VERSION} | bash - && \
     apt-get install -y nodejs && \
-    npm install -g yarn@${YARN_VERSION} && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Copy gemfiles and install gems
@@ -41,7 +39,7 @@ COPY . .
 
 # Install JavaScript dependencies if package.json exists
 RUN if [ -f package.json ]; then \
-      yarn install --frozen-lockfile; \
+      npm ci; \
     fi
 
 # Precompile bootsnap code and assets
@@ -51,7 +49,7 @@ RUN bundle exec bootsnap precompile app/ lib/ && \
 # Final stage for the app image
 FROM base
 
-# Install runtime dependencies, Node.js, and Yarn in one RUN to reduce layers
+# Install runtime dependencies and Node.js in one RUN to reduce layers
 RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y \
     curl \
@@ -59,7 +57,6 @@ RUN apt-get update -qq && \
     libvips && \
     curl -fsSL https://deb.nodesource.com/setup_${NODE_VERSION} | bash - && \
     apt-get install -y nodejs && \
-    npm install -g yarn@${YARN_VERSION} && \
     rm -rf /var/lib/apt/lists/* /var/cache/apt/archives /tmp/* /var/tmp/*
 
 # Copy built artifacts: gems, node modules, and application code
