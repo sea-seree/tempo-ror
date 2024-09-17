@@ -11,18 +11,23 @@ WORKDIR /rails
 ENV RAILS_ENV="production" \
     BUNDLE_DEPLOYMENT="1" \
     BUNDLE_PATH="/usr/local/bundle" \
-    BUNDLE_WITHOUT="development test"
+    BUNDLE_WITHOUT="development test" \
+    NODE_VERSION=20.x
 
 # Build stage
 FROM base as build
 
-# Install build dependencies in one RUN to reduce layers (no Node.js)
+# Install build dependencies and Node.js in one RUN to reduce layers
 RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y \
     build-essential \
     git \
     libvips-dev \
-    pkg-config && \
+    pkg-config \
+    curl && \
+    curl -fsSL https://deb.nodesource.com/setup_${NODE_VERSION} | bash - && \
+    apt-get install -y nodejs && \
+    npm install -g yarn && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Copy gemfiles and install gems
@@ -33,22 +38,28 @@ RUN bundle install --jobs=4 --retry=3 && \
 # Copy application code
 COPY . .
 
-# Precompile bootsnap code and assets using Sprockets
+# Install JavaScript dependencies
+RUN yarn install --frozen-lockfile
+
+# Precompile bootsnap code and assets
 RUN bundle exec bootsnap precompile app/ lib/ && \
     SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
 
 # Final stage for the app image
 FROM base
 
-# Install runtime dependencies in one RUN to reduce layers
+# Install runtime dependencies and Node.js in one RUN to reduce layers
 RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y \
     curl \
     libsqlite3-0 \
     libvips && \
+    curl -fsSL https://deb.nodesource.com/setup_${NODE_VERSION} | bash - && \
+    apt-get install -y nodejs && \
+    npm install -g yarn && \
     rm -rf /var/lib/apt/lists/* /var/cache/apt/archives /tmp/* /var/tmp/*
 
-# Copy built artifacts: gems and application code
+# Copy built artifacts: gems, node modules, and application code
 COPY --from=build /usr/local/bundle /usr/local/bundle
 COPY --from=build /rails /rails
 
