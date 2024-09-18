@@ -21,7 +21,7 @@ RUN apk add --no-cache \
     build-base \
     git \
     nodejs \
-    yarn \
+    npm \
     vips-dev \
     tzdata \
     gcompat
@@ -33,8 +33,8 @@ RUN bundle install --without development test && \
     bundle exec bootsnap precompile --gemfile
 
 # Install JavaScript dependencies
-COPY package.json yarn.lock ./
-RUN yarn install --check-files
+COPY package.json package-lock.json ./
+RUN npm ci
 
 # Copy application code
 COPY . .
@@ -55,7 +55,7 @@ RUN apk add --no-cache \
     gcompat \
     bash \
     nodejs \
-    yarn
+    npm
 
 # Copy built artifacts: gems, application
 COPY --from=build /usr/local/bundle /usr/local/bundle
