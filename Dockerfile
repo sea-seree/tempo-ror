@@ -32,10 +32,6 @@ RUN bundle install --without development test && \
     rm -rf ~/.bundle/ "${BUNDLE_PATH}"/ruby/*/cache "${BUNDLE_PATH}"/ruby/*/bundler/gems/*/.git && \
     bundle exec bootsnap precompile --gemfile
 
-# Install JavaScript dependencies
-COPY package.json package-lock.json ./
-RUN npm ci
-
 # Copy application code
 COPY . .
 
