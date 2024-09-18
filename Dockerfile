@@ -4,7 +4,6 @@
 ARG RUBY_VERSION=3.3.1
 FROM ruby:$RUBY_VERSION-alpine AS base
 
-
 # Rails app lives here
 WORKDIR /rails
 
@@ -14,7 +13,6 @@ ENV RAILS_ENV="production" \
     BUNDLE_PATH="/usr/local/bundle" \
     BUNDLE_WITHOUT="development"
 
-
 # Throw-away build stage to reduce size of final image
 FROM base as build
 
@@ -23,6 +21,7 @@ RUN apk add --no-cache \
     build-base \
     git \
     nodejs \
+    yarn \
     vips-dev \
     tzdata \
     gcompat
@@ -33,6 +32,10 @@ RUN bundle install --without development test && \
     rm -rf ~/.bundle/ "${BUNDLE_PATH}"/ruby/*/cache "${BUNDLE_PATH}"/ruby/*/bundler/gems/*/.git && \
     bundle exec bootsnap precompile --gemfile
 
+# Install JavaScript dependencies
+COPY package.json yarn.lock ./
+RUN yarn install --check-files
+
 # Copy application code
 COPY . .
 
@@ -42,7 +45,6 @@ RUN bundle exec bootsnap precompile app/ lib/
 # Precompiling assets for production without requiring secret RAILS_MASTER_KEY
 RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
 
-
 # Final stage for app image
 FROM base
 
@@ -51,7 +53,10 @@ RUN apk add --no-cache \
     vips \
     tzdata \
     gcompat \
-    bash
+    bash \
+    nodejs \
+    yarn
+
 # Copy built artifacts: gems, application
 COPY --from=build /usr/local/bundle /usr/local/bundle
 COPY --from=build /rails /rails
@@ -60,10 +65,10 @@ COPY --from=build /rails /rails
 RUN adduser -h /rails -s /bin/sh -D rails && \
     chown -R rails:rails db log storage tmp
 USER rails:rails
+
 # Entrypoint prepares the database.
 # ENTRYPOINT ["/rails/bin/docker-entrypoint"]
 
 # Start the server by default, this can be overwritten at runtime
 EXPOSE 3000
-# CMD ["./bin/rails", "server"]
 CMD ["./bin/rails", "db:prepare", "&&", "./bin/rails", "server", "-b", "0.0.0.0"]
