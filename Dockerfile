@@ -2,7 +2,8 @@
 
 # Make sure RUBY_VERSION matches the Ruby version in .ruby-version and Gemfile
 ARG RUBY_VERSION=3.3.1
-FROM ruby:$RUBY_VERSION-alpine as base
+FROM ruby:$RUBY_VERSION-alpine AS base
+
 
 # Rails app lives here
 WORKDIR /rails
@@ -17,21 +18,18 @@ ENV RAILS_ENV="production" \
 # Throw-away build stage to reduce size of final image
 FROM base as build
 
-# Install packages needed to build gems for Alpine
+# Install packages needed to build gems and precompile assets
 RUN apk add --no-cache \
     build-base \
     git \
+    nodejs \
     vips-dev \
-    sqlite-dev \
-    postgresql-dev \
-    bash \
-    curl \
-    pkgconfig \
-    tzdata
+    tzdata \
+    gcompat
 
 # Install application gems
 COPY Gemfile Gemfile.lock ./
-RUN bundle install --jobs=4 --retry=3 && \
+RUN bundle install --without development test && \
     rm -rf ~/.bundle/ "${BUNDLE_PATH}"/ruby/*/cache "${BUNDLE_PATH}"/ruby/*/bundler/gems/*/.git && \
     bundle exec bootsnap precompile --gemfile
 
@@ -51,18 +49,21 @@ FROM base
 # Install packages needed for deployment
 RUN apk add --no-cache \
     vips \
-    sqlite-libs \
-    postgresql-libs
-
+    tzdata \
+    gcompat \
+    bash
 # Copy built artifacts: gems, application
 COPY --from=build /usr/local/bundle /usr/local/bundle
 COPY --from=build /rails /rails
 
 # Run and own only the runtime files as a non-root user for security
-RUN adduser -D -g '' rails && \
+RUN adduser -h /rails -s /bin/sh -D rails && \
     chown -R rails:rails db log storage tmp
 USER rails:rails
+# Entrypoint prepares the database.
+# ENTRYPOINT ["/rails/bin/docker-entrypoint"]
 
 # Start the server by default, this can be overwritten at runtime
 EXPOSE 3000
+# CMD ["./bin/rails", "server"]
 CMD ["./bin/rails", "db:prepare", "&&", "./bin/rails", "server", "-b", "0.0.0.0"]
