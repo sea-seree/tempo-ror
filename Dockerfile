@@ -24,7 +24,6 @@ RUN apk add --no-cache \
     git \
     nodejs \
     npm \
-    yarn \
     vips-dev \
     tzdata \
     gcompat
@@ -36,8 +35,8 @@ RUN bundle install && \
     bundle exec bootsnap precompile --gemfile
 
 # Install node modules
-COPY package.json yarn.lock ./
-RUN yarn install --frozen-lockfile
+COPY package.json ./
+RUN npm install --frozen-lockfile
 
 # Copy application code
 COPY . .
@@ -55,7 +54,6 @@ FROM base
 RUN apk add --no-cache \
     nodejs \
     npm \
-    yarn \
     vips \
     tzdata \
     gcompat \
